@@ -2,10 +2,10 @@ from model import Constituent
 from model import TableNode
 
 
-def read_grammar():
+def read_grammar(file_path):
     global grammar
     grammar = {}
-    f = open("grammar.txt", "r")
+    f = open(file_path, "r")
     for line in f.readlines():
         tokens = [x.strip() for x in line.strip().split("->")]
         if len(tokens) != 2:
@@ -15,13 +15,11 @@ def read_grammar():
             grammar[right] = list()
         grammar[right].append(tokens)
 
-    for e in grammar:
-        print(e, grammar[e])
     f.close()
 
 
-def read_input():
-    f = open("input.txt", "r")
+def read_input(file_path):
+    f = open(file_path, "r")
     inputs = [line.strip() for line in f.readlines()]
     f.close()
     return inputs
@@ -30,10 +28,7 @@ def read_input():
 def initialize_table(length):
     table = list()
     for i in range(0, length):
-        temp = list()
-        for j in range(0, length+1):
-            temp.append(TableNode(i, j))
-        table.append(temp)
+        table.append([TableNode(i, j) for j in range(0, length+1)])
     return table
 
 
@@ -49,13 +44,19 @@ def dfs(node):
         return "({}{})".format(node.pos, output)
 
 
-def print_parse_tree(table, length):
+def print_parse_tree(table, length, f):
+    f.write("\nParse Tree:\n")
     for cons in table[0][length].cons:
         if cons.pos == 'S':
-            print(dfs(cons))
+            f.write(dfs(cons)+"\n")
+    f.write("\n")
 
 
-def parsing(sentence):
+def print_grammar(grammar, f):
+    f.write("{} -> {}\n".format(grammar[0], grammar[1]))
+
+
+def parsing(sentence, f):
     global grammar
     words = sentence.split(" ")
     length = len(words)
@@ -67,10 +68,12 @@ def parsing(sentence):
                 if words[i] in grammar:
                     for g in grammar[words[i]]:
                         table[i][j].cons.append(Constituent(i, j, words[j-1], g[0]))
+                        print_grammar(g, f)
                     for c in table[i][j].cons:
                         if c.pos in grammar:
                             for g2 in grammar[c.pos]:
                                 table[i][j].cons.append(Constituent(i, j, words[j-1], g2[0]))
+                                print_grammar(g2, f)
             elif j-i > 2:
                 for k in range(i+1, j-1):
                     left = table[i][k].cons
@@ -83,6 +86,7 @@ def parsing(sentence):
                                     for gram in grammar[candidate]:
                                         cons = Constituent(i, j, words[j-1], gram[0], l_g, r_g)
                                         table[i][j].cons.append(cons)
+                                        print_grammar(gram, f)
             else:
                 left = table[i][j-1].cons
                 right = table[i+1][j].cons
@@ -93,14 +97,15 @@ def parsing(sentence):
                             for gram in grammar[candidate]:
                                 cons = Constituent(i, j, words[j-1], gram[0], l_g, r_g)
                                 table[i][j].cons.append(cons)
-    print_parse_tree(table, length)
+                                print_grammar(gram, f)
+    print_parse_tree(table, length, f)
 
 
 if __name__ == "__main__":
-    read_grammar()
-    #inputs = read_input()
-    #for sentence in inputs:
-    #    parsing(sentence)
-    parsing('time flies like an arrow')
-    parsing('the man saw the boy with the telescope')
+    read_grammar("grammar.txt")
+    inputs = read_input("input.txt")
+    f = open("output.txt", "w")
+    for sentence in inputs:
+        parsing(sentence, f)
+    f.close()
 

@@ -1,0 +1,115 @@
+det -> the
+DT -> det
+n -> man
+v -> man
+NP -> n
+VP -> v
+NP -> DT NP
+v -> saw
+n -> saw
+VP -> v
+NP -> n
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+NP -> DT NP
+det -> the
+DT -> det
+n -> boy
+v -> boy
+NP -> n
+VP -> v
+NP -> DT NP
+VP -> VP NP
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+NP -> DT NP
+S -> NP VP
+NP -> NP VP
+p -> with
+P -> p
+det -> the
+DT -> det
+n -> telescope
+NP -> n
+NP -> DT NP
+PP -> P NP
+NP -> NP PP
+VP -> VP PP
+NP -> DT NP
+NP -> NP PP
+VP -> VP NP
+VP -> VP NP
+VP -> VP PP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+VP -> VP NP
+NP -> NP PP
+VP -> VP PP
+NP -> DT NP
+NP -> DT NP
+NP -> DT NP
+NP -> DT NP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+NP -> NP PP
+NP -> NP PP
+
+Parse Tree:
+(S(NP(DT the)(NP man))(VP(VP saw)(NP(DT the)(NP(NP boy)(PP(P with)(NP(DT the)(NP telescope)))))))
+(S(NP(DT the)(NP man))(VP(VP saw)(NP(NP(DT the)(NP boy))(PP(P with)(NP(DT the)(NP telescope))))))
+(S(NP(DT the)(NP man))(VP(VP(VP saw)(NP(DT the)(NP boy)))(PP(P with)(NP(DT the)(NP telescope)))))
+
+n -> time
+v -> time
+NP -> n
+VP -> v
+n -> flies
+v -> flies
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+p -> like
+v -> like
+P -> p
+VP -> v
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+det -> an
+DT -> det
+n -> arrow
+NP -> n
+NP -> DT NP
+PP -> P NP
+VP -> VP NP
+NP -> NP PP
+S -> NP VP
+NP -> NP VP
+VP -> VP PP
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+VP -> VP NP
+NP -> NP PP
+S -> NP VP
+NP -> NP VP
+VP -> VP PP
+VP -> VP NP
+
+Parse Tree:
+(S(NP time)(VP(VP flies)(PP(P like)(NP(DT an)(NP arrow)))))
+(S(NP(NP time)(VP flies))(VP(VP like)(NP(DT an)(NP arrow))))
+
